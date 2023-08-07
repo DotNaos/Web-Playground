@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <style>
+      body {
+        background-color: #1a1a1a;
+        margin: 0;
+        padding: 0;
+        /* overflow: hidden; */
+        height: 1080px;
+      }
+      img {
+        background-position: center;
+        background-size: cover;
+        width: 100%;
+        border-radius: 20%;
+        overflow: hidden;
+        position: absolute;
+      }
+
+      #wand {
+        aspect-ratio: 1/10;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 10vmin;
+        height: 200vmin;
+      }
+
+      .cap {
+        height: 10%;
+        border-radius: 3vmin 3vmin 0 0;
+        background: linear-gradient(
+          to right,
+          rgb(212 221 236) 10%,
+          rgb(255 255 255) 45% 55%,
+          rgb(212 221 236) 90%
+        );
+        box-shadow: 0vmin 1vmin 4vmin rgb(0 0 0 / 80%);
+      }
+      .handle {
+        height: 80%;
+        border-radius: 0 0 3vmin 3vmin;
+        background: linear-gradient(
+          to right,
+          rgb(26, 24, 28) 10%,
+          rgb(42, 40, 44) 45% 55%,
+          rgb(26, 24, 28) 90%
+        );
+      }
+
+      .tile {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        margin: 1vmin;
+
+        width: 30vmin;
+        aspect-ratio: 1/1;
+        border-radius: 20%;
+        overflow: hidden;
+
+        background-color: #262831;
+        box-shadow: inset 0vmin 0vmin 2vmin 0.1vmin #4c516879,
+          0vmin 1vmin 4vmin rgb(0 0 0 / 80%);
+      }
+      .tile > img {
+        opacity: var(--opacity);
+
+        filter: blur(calc(var(--blur) * 10px));
+      }
+      .tile > img.ico {
+        position: absolute;
+        opacity: 1;
+        width: 10vmin;
+        height: 10vmin;
+        filter: contrast(30%) opacity(30%);
+      }
+
+
+      .fa-solid {
+        z-index: -1;
+      }
+
+      .fa-magic {
+        z-index: 10;
+      }
+    </style>
+
+
+      <div class="tile">
+        <img class="ico" src="bild.svg" />
+        <i class="fa-solid fa-magic"></i>
+        <img
+          src="https://plus.unsplash.com/premium_photo-1674309438579-587b58d8486e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1325&q=80"
+        />
+      </div>
+      <div class="tile">
+        <img class="ico" src="bild.svg" />
+        <i class="fa-solid fa-magic"></i>
+        <img
+          src="https://images.unsplash.com/photo-1690786177511-82c5b8ec3aa1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1335&q=80"
+        />
+      </div>
+      <div class="tile">
+        <img class="ico" src="bild.svg" />
+        <i class="fa-solid fa-magic"></i>
+        <img
+          src="https://images.unsplash.com/photo-1690818723724-865c77962c55?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=927&q=80"
+        />
+      </div>
+      <div class="tile">
+        <img class="ico" src="bild.svg" />
+        <i class="fa-solid fa-magic"></i>
+        <img
+          src="https://images.unsplash.com/photo-1690983183786-ad265120ca37?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80"
+        />
+      </div>
+      <div class="tile">
+        <img class="ico" src="bild.svg" />
+        <i class="fa-solid fa-magic"></i>
+        <img
+          src="https://images.unsplash.com/photo-1690398252338-7f49c060cfcb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80"
+        />
+      </div>
+
+
+    <div id="wand">
+      <div class="cap"></div>
+      <div class="handle"></div>
+    </div>
+
+    <script>
+      window.onmousemove = (e) => {
+        const wandX = window.innerWidth * -0.15 + e.clientX * 1.3;
+        const wandY = window.innerHeight * 0.1 + e.clientY * 0.4;
+        const rotation = -10 + (e.clientX / window.innerWidth) * 20;
+        wand.animate(
+          {
+            left: `${wandX}px`,
+            top: `${wandY}px`,
+            rotate: `${rotation}deg`,
+          },
+          {
+            duration: 1000,
+            fill: "forwards",
+          }
+        );
+
+        
+
+        const tiles = document.querySelectorAll(".tile");
+
+        let i = 0;
+        for (const tile of tiles) {
+            // Position tiles in a half circle (180 deg)
+            // The tile is rotated to fit as tangent on the circle
+            const tileCount = tiles.length;
+            // const rotation =  180 / (tileCount - 1) * i - 90;
+            const tileX = (window.innerWidth / tileCount * i) + 500;
+
+            const halvWidth = window.innerWidth / 2;
+ 
+    
+            // The radius of the circle is the width of the screen
+            const radius = halvWidth;
+            const perc = window.innerWidth / tileX;
+
+            const b = 2 * Math.PI / window.innerWidth * 2.5;
+            const f_x = 500 * Math.sin(b * tileX);
+
+            const tileY  = (1000 - f_x * 0) ;
+            
+            
+            
+            //   Rotate tiles around the center of the screen
+            tile.animate(
+            {
+                left: `${tileX}px`,
+                top: `${tileY}px`,
+                rotate: `${rotation}deg`,
+            },
+            {
+                duration: 1000,
+                fill: "forwards",
+            }
+            );
+
+            
+
+          const dimensions = tile.getBoundingClientRect();
+
+          const relativeMouseX = e.clientX - dimensions.left,
+            relativeMouseXAsDecimal = relativeMouseX / dimensions.width;
+
+          const opacity = relativeMouseXAsDecimal,
+            blur = 1 - relativeMouseXAsDecimal;
+
+          tile.style.setProperty("--opacity", opacity);
+          tile.style.setProperty("--blur", blur);
+          i++;
+        }
+      };
+    </script>
+  </body>
+</html>
